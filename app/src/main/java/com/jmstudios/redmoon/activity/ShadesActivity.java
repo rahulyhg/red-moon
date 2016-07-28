@@ -53,6 +53,8 @@ import android.net.Uri;
 import android.os.Build.VERSION;
 import android.widget.Toast;
 
+import hotchemi.android.rate.AppRate;
+
 import com.jmstudios.redmoon.R;
 import com.jmstudios.redmoon.fragment.ShadesFragment;
 import com.jmstudios.redmoon.helper.FilterCommandFactory;
@@ -134,6 +136,16 @@ public class ShadesActivity extends AppCompatActivity {
         if (!mSettingsModel.getIntroShown()) {
             startIntro();
         }
+
+        AppRate.with(this)
+            .setInstallDays(7) // default 10, 0 means install day.
+            .setLaunchTimes(5) // default 10
+            .setRemindInterval(3) // default 1
+            .setShowLaterButton(true) // default true
+            .monitor();
+
+        // Show a dialog if meets conditions
+        AppRate.showRateDialogIfMeetsConditions(this);
     }
 
     @Override

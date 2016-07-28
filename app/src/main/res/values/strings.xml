@@ -128,6 +128,13 @@
     <string name="automatic_filter_options_array_1">Automatic (sun)</string>
     <string name="automatic_filter_options_array_2">Automatic (custom)</string>
 
+    <!-- Rate dialog -->
+    <string name="rate_dialog_title">Rate this app</string>
+    <string name="rate_dialog_message">If you enjoy playing this app, would you mind taking a moment to rate it? It won\'t take more than a minute. Thanks for your support!</string>
+    <string name="rate_dialog_ok">Rate Now</string>
+    <string name="rate_dialog_cancel">Later</string>
+    <string name="rate_dialog_no">No, Thanks</string>
+
     <string-array name="automatic_filter_values_array"
                   translatable="false">
       <item>never</item>
