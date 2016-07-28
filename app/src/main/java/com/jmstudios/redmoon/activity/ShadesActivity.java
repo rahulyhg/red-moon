@@ -66,7 +66,7 @@ import com.jmstudios.redmoon.activity.Intro;
 
 public class ShadesActivity extends AppCompatActivity {
     private static final String TAG = "ShadesActivity";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final String FRAGMENT_TAG_SHADES = "jmstudios.fragment.tag.SHADES";
 
     // Only for compatibility with older shortcuts; new shortcuts will launch ShortcutToggleActivity

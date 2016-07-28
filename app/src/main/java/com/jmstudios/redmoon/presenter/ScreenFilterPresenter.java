@@ -76,7 +76,7 @@ import com.jmstudios.redmoon.view.ScreenFilterView;
 public class ScreenFilterPresenter implements OrientationChangeReceiver.OnOrientationChangeListener,
                                               SettingsModel.OnSettingsChangedListener {
     private static final String TAG = "ScreenFilterPresenter";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public static final int NOTIFICATION_ID = 1;
     private static final int REQUEST_CODE_ACTION_SETTINGS = 1000;

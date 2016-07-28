@@ -76,7 +76,7 @@ import com.jmstudios.redmoon.service.ScreenFilterService;
 
 public class ShadesFragment extends PreferenceFragment {
     private static final String TAG = "ShadesFragment";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private ShadesPresenter mPresenter;
     private FloatingActionButton mToggleFab;

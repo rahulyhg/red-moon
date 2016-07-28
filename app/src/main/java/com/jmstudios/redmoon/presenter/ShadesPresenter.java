@@ -54,7 +54,7 @@ import com.jmstudios.redmoon.preference.DimSeekBarPreference;
 
 public class ShadesPresenter implements SettingsModel.OnSettingsChangedListener {
     private static final String TAG = "ShadesPresenter";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 ;
     private ShadesFragment mView;
     private SettingsModel mSettingsModel;
