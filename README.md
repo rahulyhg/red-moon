@@ -11,7 +11,7 @@ will have a healthier sleep.
 
 <a href='https://play.google.com/store/apps/details?id=com.jmstudios.redmoon'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="200" height="100"/></a> *
 
-[Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.8.1/red-moon-v2.8.1.apk)
+[Direct download](https://github.com/raatmarien/red-moon/releases/download/v2.9.0/red-moon-v2.9.0.apk)
 
 [![Translation status](https://hosted.weblate.org/widgets/red-moon/-/svg-badge.svg)](https://hosted.weblate.org/engage/red-moon/?utm_source=widget)
 
@@ -32,7 +32,8 @@ homescreen
 <img src="https://lut.im/UCDOb028ya/L8Tr7OH2tFedCecr.png" width="180" height="320" />
 <img src="https://lut.im/fHFiGVkVCE/GyYBXwlMqF1a0P0Y.png" width="180" height="320" />
 <img src="https://lut.im/qpg8N8dOre/dyyaoAOxAiBCecXE.png" width="180" height="320" />
-<img src="https://lut.im/xGoZSEqAmv/oUJt4aYuURbaMn4z.png" width="180" height="320" />
+<img src="https://lut.im/ZlANzMLu60/ZlIVyUG8VNWxnNIc.png" width="180" height="320" />
+<img src="https://lut.im/k4qVX9nWZM/LAno9qNrTm7ARweT.png" width="180" height="320" />
 <img src="https://lut.im/UWimrSsPP9/HkyHR2pu7OWli3PI.png" width="180" height="320" />
 <img src="https://lut.im/tpijkCL6XC/JSBUepBbw2NTdcPj.png" width="180" height="320" />
 <img src="https://lut.im/caWHk3pqNt/dXcbHtO2PGwtl4de.png" width="180" height="320" />
