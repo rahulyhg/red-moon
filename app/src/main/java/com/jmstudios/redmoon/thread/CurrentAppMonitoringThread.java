@@ -96,7 +96,7 @@ public class CurrentAppMonitoringThread extends Thread {
     private static String getCurrentAppUsingUsageStats(Context context) {
         try {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                UsageStatsManager usm = (UsageStatsManager) context.getSystemService("usagestats");
+                UsageStatsManager usm = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
                 long time = System.currentTimeMillis();
                 List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
                                                                time - 1000 * 1000, time);
@@ -133,7 +133,8 @@ public class CurrentAppMonitoringThread extends Thread {
         return app.equals("com.android.packageinstaller") ||
             app.equals("eu.chainfire.supersu") ||
             app.equals("com.koushikdutta.superuser") ||
-            app.equals("me.phh.superuser");
+            app.equals("me.phh.superuser") ||
+            app.equals("com.owncloud.android");
     }
 
     private void sendStartSuspendCommand() {
