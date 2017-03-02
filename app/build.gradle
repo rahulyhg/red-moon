@@ -3,6 +3,7 @@ ext {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 24
@@ -12,14 +13,30 @@ android {
         applicationId "com.jmstudios.redmoon"
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 25
-        versionName "2.9.2"
+        versionCode 26
+        versionName "2.10.0"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ eventBusIndex : 'com.jmstudios.redmoon.event.EventBusIndex' ]
+            }
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    lintOptions {
+        disable 'NewApi'
     }
 }
 
@@ -30,4 +47,11 @@ dependencies {
     compile 'com.luckycatlabs:SunriseSunsetCalculator:1.2'
     compile 'com.github.paolorotolo:appintro:3.4.0'
     compile 'com.github.hotchemi:android-rate:1.0.1'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'org.greenrobot:eventbus:3.0.0'
+    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+}
+
+repositories {
+    mavenCentral()
 }
