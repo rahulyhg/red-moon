@@ -37,7 +37,7 @@ import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.helper.ProfilesHelper
 import com.jmstudios.redmoon.model.ProfilesModel
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 
 import org.greenrobot.eventbus.Subscribe
 
@@ -94,7 +94,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
     }
 
     private fun initLayout() {
-        Log("Starting initLayout")
+        Log.i("Starting initLayout")
         // The default operations first need to be converted to an ArrayList,
         // because the ArrayAdapter will turn it into an AbstractList otherwise,
         // which doesn't support certain actions, like adding elements.
@@ -112,12 +112,12 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
     private fun updateButtonSetup() {
         if (mProfile > DEFAULT_OPERATIONS_AM - 1) {
-            Log("Setting remove button")
+            Log.i("Setting remove button")
             mProfileActionButton.text = context.resources.getString(R.string.button_remove_profile)
             mProfileActionButton.setOnClickListener { openRemoveProfileDialog() }
 
         } else {
-            Log("Setting add button")
+            Log.i("Setting add button")
             mProfileActionButton.text = context.resources.getString(R.string.button_add_profile)
             mProfileActionButton.setOnClickListener { openAddNewProfileDialog() }
         }
@@ -125,7 +125,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
     override fun onItemSelected(parent: AdapterView<*>, view: View,
                                 pos: Int, id: Long) {
-        Log("Item $pos selected")
+        Log.i("Item $pos selected")
         mProfile = pos
         persistInt(mProfile)
         updateButtonSetup()
@@ -147,7 +147,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
     private fun openRemoveProfileDialog() {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle(context.resources.getString(R.string.remove_profile_dialog_title))
+        builder.setTitle(context.resources.getString(R.string.remove_filter_dialog_title))
 
         val okString = context.resources.getString(R.string.button_remove_profile)
         val cancelString = context.resources.getString(R.string.cancel_dialog)
@@ -167,11 +167,11 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
 
     private fun openAddNewProfileDialog() {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle(context.resources.getString(R.string.add_new_profile_dialog_title))
+        builder.setTitle(context.resources.getString(R.string.add_new_filter_dialog_title))
 
         val nameInput = EditText(context)
         nameInput.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-        nameInput.hint = context.resources.getString(R.string.add_new_profile_edit_hint)
+        nameInput.hint = context.resources.getString(R.string.add_new_filter_edit_hint)
 
         builder.setView(nameInput)
 
@@ -219,7 +219,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
      */
     private fun updateAmountProfiles() {
         val amountProfiles = mProfilesModel.profiles.size + DEFAULT_OPERATIONS_AM
-        Log("There are now $amountProfiles profiles.")
+        Log.i("There are now $amountProfiles profiles.")
         Config.amountProfiles = amountProfiles
     }
 
@@ -252,7 +252,7 @@ class ProfileSelectorPreference(private val mContext: Context, attrs: AttributeS
         }
     }
 
-    companion object {
+    companion object : Logger() {
         const val DEFAULT_VALUE = 1
         const val DEFAULT_OPERATIONS_AM = 3
     }

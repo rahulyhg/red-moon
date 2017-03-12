@@ -1,20 +1,45 @@
 ext {
-    android_support_version = '24.2.1'
+    android_support_version = '25.2.0'
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+
+if(rootProject.file("keystore.properties").exists()) {
+    // From https://developer.android.com/studio/publish/app-signing.html
+    // to load the signing config file
+    def keystorePropertiesFile = rootProject.file("keystore.properties")
+    def keystoreProperties = new Properties()
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+    android {
+        signingConfigs {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+   }
+}
+
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.jmstudios.redmoon"
         minSdkVersion 17
-        targetSdkVersion 24
-        versionCode 26
-        versionName "2.10.0"
+        targetSdkVersion 25
+        versionCode 27
+        versionName "2.10.1"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [ eventBusIndex : 'com.jmstudios.redmoon.event.EventBusIndex' ]

@@ -29,7 +29,7 @@ import com.jmstudios.redmoon.preference.TimePickerPreference
 import com.jmstudios.redmoon.receiver.TimeToggleChangeReceiver
 import com.jmstudios.redmoon.service.LocationUpdateService
 import com.jmstudios.redmoon.util.hasLocationPermission
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 import com.jmstudios.redmoon.util.requestLocationPermission
 
 import org.greenrobot.eventbus.Subscribe
@@ -105,7 +105,7 @@ class TimeToggleFragment : EventPreferenceFragment() {
         val auto = Config.timeToggle
         val useLocation = Config.useLocation
         val enabled = auto && !useLocation
-        Log("auto: $auto, useLocation: $useLocation, enabled: $enabled")
+        Log.i("auto: $auto, useLocation: $useLocation, enabled: $enabled")
         automaticTurnOnPref.isEnabled = enabled
         automaticTurnOffPref.isEnabled = enabled
         automaticTurnOnPref.summary = Config.automaticTurnOnTime
@@ -115,24 +115,14 @@ class TimeToggleFragment : EventPreferenceFragment() {
     //region presenter
     @Subscribe
     fun onTimeToggleChanged(event: timeToggleChanged) {
-        Log("Filter mode changed to " + Config.timeToggle)
+        Log.i("Filter mode changed to " + Config.timeToggle)
         updatePrefs()
         if (Config.timeToggle) {
-            TimeToggleChangeReceiver.rescheduleOnCommand(activity)
-            TimeToggleChangeReceiver.rescheduleOffCommand(activity)
+            TimeToggleChangeReceiver.rescheduleOnCommand()
+            TimeToggleChangeReceiver.rescheduleOffCommand()
         } else {
-            TimeToggleChangeReceiver.cancelAlarms(activity)
+            TimeToggleChangeReceiver.cancelAlarms()
         }
-    }
-
-    @Subscribe
-    fun onCustomTurnOnTimeChanged(event: customTurnOnTimeChanged) {
-        TimeToggleChangeReceiver.rescheduleOnCommand(activity)
-    }
-
-    @Subscribe
-    fun onCustomTurnOffTimeChanged(event: customTurnOffTimeChanged) {
-        TimeToggleChangeReceiver.rescheduleOffCommand(activity)
     }
 
     @Subscribe
@@ -183,19 +173,9 @@ class TimeToggleFragment : EventPreferenceFragment() {
             updateLocationPref()
         }
     }
-
-    @Subscribe
-    fun onSunsetTimeChanged(event: sunsetTimeChanged) {
-        TimeToggleChangeReceiver.rescheduleOnCommand(activity)
-    }
-
-    @Subscribe
-    fun onSunriseTimeChanged(event: sunriseTimeChanged) {
-        TimeToggleChangeReceiver.rescheduleOffCommand(activity)
-    }
     //endregion
 
-    companion object {
+    companion object : Logger() {
         const val DEFAULT_LOCATION = "not set"
     }
 }

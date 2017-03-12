@@ -10,7 +10,7 @@ import com.jmstudios.redmoon.fragment.AboutFragment
 import com.jmstudios.redmoon.fragment.SecureSuspendFragment
 import com.jmstudios.redmoon.fragment.TimeToggleFragment
 import com.jmstudios.redmoon.model.Config
-import com.jmstudios.redmoon.util.Log
+import com.jmstudios.redmoon.util.Logger
 import com.jmstudios.redmoon.util.onRequestPermissionsResult
 
 abstract class ThemedAppCompatActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ abstract class ThemedAppCompatActivity : AppCompatActivity() {
 
         // Only create and attach a new fragment on the first Activity creation.
         if (savedInstanceState == null) {
-            Log("onCreate - First creation")
+            Log.i("onCreate - First creation")
             fragmentManager.beginTransaction()
                            .replace(R.id.fragment_container, fragment, tag)
                            .commit()
@@ -48,6 +48,7 @@ abstract class ThemedAppCompatActivity : AppCompatActivity() {
                                             grantResults: IntArray) {
         onRequestPermissionsResult(requestCode)
     }
+    companion object : Logger()
 }
 
 // One subclass per subscreen

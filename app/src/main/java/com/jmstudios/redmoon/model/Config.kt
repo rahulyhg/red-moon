@@ -107,8 +107,8 @@ object Config {
     val secureSuspend: Boolean
         get() = getBooleanPref(R.string.pref_key_secure_suspend, false)
 
-    val dimButtons: Boolean
-        get() = getBooleanPref(R.string.pref_key_dim_buttons, true)
+    val buttonBacklightFlag: String
+        get() = getStringPref(R.string.pref_key_button_backlight, "off")
     
     private val darkThemeFlag: Boolean
         get() = getBooleanPref(R.string.pref_key_dark_theme, false)
@@ -139,6 +139,13 @@ object Config {
     //region state
     val activeTheme: Int
         get() = if (darkThemeFlag) { R.style.AppThemeDark } else { R.style.AppTheme }
+
+    val buttonBacklightLevel: Float
+        get() = when (buttonBacklightFlag) {
+                    "system" -> -1.toFloat()
+                    "dim" -> 1 - (dim.toFloat() / 100)
+                    else -> 0.toFloat()
+                }
 
     val automaticTurnOnTime: String
         get() = if (useLocation) sunsetTime else customTurnOnTime

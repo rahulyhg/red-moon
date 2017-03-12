@@ -5,7 +5,7 @@
     <string name="running">実行中です。オフにして apk をインストールしてください</string>
     <string name="paused">一時停止しました</string>
 
-    <string name="pref_title_appearance">プロファイル</string>
+    <string name="pref_title_filter">プロファイル</string>
     <string name="time_toggle_activity">時間のフィルター</string>
     <string name="pref_title_time_toggle">時間のフィルター</string>
     <string name="pref_title_startup">スタートアップ</string>
@@ -38,9 +38,9 @@
 
     <string name="help_snackbar_text">スイッチを押すと、レッドムーンを有効にします</string>
 
-    <string name="add_new_profile_dialog_title">プロファイル名を入力してください</string>
-    <string name="add_new_profile_edit_hint">プロファイル名</string>
-    <string name="remove_profile_dialog_title">このプロファイルを削除しますか?</string>
+    <string name="add_new_filter_dialog_title">プロファイル名を入力してください</string>
+    <string name="add_new_filter_edit_hint">プロファイル名</string>
+    <string name="remove_filter_dialog_title">このプロファイルを削除しますか?</string>
     <string name="set_dialog">設定</string>
     <string name="ok_dialog">OK</string>
     <string name="cancel_dialog">キャンセル</string>
@@ -72,11 +72,11 @@ Red Moon を使用して画面を暗くすることができます。</string>
 容易に眠りに落ちることができるようにします。</string>
 
     <string name="intro_slide_4_title">はじめましょう!</string>
-    <string name="intro_slide_4_text">Red Moon をオンにするには、
-右上のスイッチを押してください。</string>
+    <string name="intro_slide_4_text">右上のスイッチで Red Moon 
+をオン、オフにします。</string>
 
     <string name="intro_label">イントロ</string>
-    <string name="show_intro_text">イントロを表示</string>
+    <string name="show_intro_text">イントロをリプレイ</string>
 
     <string name="text_switch_on">オン</string>
     <string name="text_switch_off">オフ</string>
@@ -107,6 +107,27 @@ Red Moon がオンのときに作動しないと思われるアプリを使用�
     <string name="action_off">オフにする</string>
 
     <string name="use_location_title">場所からの回数</string>
+    <string name="action_next_filter">次のプロファイル</string>
+
+    <string name="menu_about">アプリについて</string>
+    <string name="activity_about">Red Moon について</string>
+    <string name="pref_title_integration">他のアプリと統合</string>
+    <string name="pref_title_version">バージョン</string>
+
+    <string name="pref_summary_integration">LibreTasks や Tasker のような一部のアプリでは、特定のイベントが発生したときに、タスクを自動化することができます。Red Moon はオンまたはオフになったときに、それらのアプリが応答できるように公開の通知を送信します。使用しない、またはこれらのアプリを開発する場合、次のパラグラフを無視することができます。
+
+Red Moon は、アクション \'com.jmstudios.redmoon.RED_MOON_TOGGLED\' で公開インテントをブロードキャストします。インテントには、Red Moon がオンまたはオフに切り替えられているかどうかを示すブール値の拡張がキー \'jmstudios.bundle.key.FILTER_IS_ON\' で含まれます。</string>
+<!-- Currently unused -->
+    <string name="add_new_profile_dialog_title">プロファイル名を入力してください</string>
+    <string name="add_new_profile_edit_hint">プロファイル名</string>
+    <string name="remove_profile_dialog_title">このプロファイルを削除しますか?</string>
     <string name="action_next_profile">次のプロファイル</string>
+    <string name="pref_title_appearance">プロファイル</string>
+    <string name="pref_title_button_backlight_disclaimer">一部のデバイスでは効果がありません</string>
+    <string name="pref_title_button_backlight">ハードウェアボタンのバックライト</string>
+
+    <string name="pref_button_backlight_entries_array_0">システム管理</string>
+    <string name="pref_button_backlight_entries_array_1">薄暗いレベルのフィルターを使用</string>
+    <string name="pref_button_backlight_entries_array_2">オフにする</string>
 
     </resources>

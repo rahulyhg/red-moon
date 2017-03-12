@@ -37,13 +37,10 @@
 package com.jmstudios.redmoon.activity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Switch
-import com.jmstudios.redmoon.BuildConfig
 
 import hotchemi.android.rate.AppRate
 
@@ -51,16 +48,20 @@ import com.jmstudios.redmoon.R
 
 import com.jmstudios.redmoon.event.*
 import com.jmstudios.redmoon.fragment.FilterFragment
-import com.jmstudios.redmoon.util.requestOverlayPermission
 import com.jmstudios.redmoon.model.Config
 import com.jmstudios.redmoon.service.ScreenFilterService
-import com.jmstudios.redmoon.util.Log
-import com.jmstudios.redmoon.util.appContext
+import com.jmstudios.redmoon.util.Logger
+import com.jmstudios.redmoon.util.handleUpgrades
+import com.jmstudios.redmoon.util.requestOverlayPermission
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : ThemedAppCompatActivity() {
+
+    companion object : Logger() {
+        const val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.MainActivity.EXTRA_FROM_SHORTCUT_BOOL"
+    }
 
     override val fragment = FilterFragment()
     override val tag = "jmstudios.fragment.tag.FILTER"
@@ -69,7 +70,7 @@ class MainActivity : ThemedAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val intent = intent
-        Log("Got intent")
+        Log.i("Got intent")
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) { toggleAndFinish() }
 
@@ -89,7 +90,7 @@ class MainActivity : ThemedAppCompatActivity() {
         // Show a dialog if meets conditions
         AppRate.showRateDialogIfMeetsConditions(this)
 
-        handleUpgrades()
+        handleUpgrades() // From utils
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -120,16 +121,14 @@ class MainActivity : ThemedAppCompatActivity() {
     }
 
     override fun onDestroy() {
-        // Really we want to post an eventbus event, "uiClosed"
-        // So the service can turn itself off if the filter is paused
-        /* ScreenFilterService.stop() */
+        EventBus.getDefault().post(uiClosed())
         super.onDestroy()
     }
 
     override fun onNewIntent(intent: Intent) {
         val fromShortcut = intent.getBooleanExtra(EXTRA_FROM_SHORTCUT_BOOL, false)
         if (fromShortcut) { toggleAndFinish() }
-        Log("onNewIntent")
+        Log.i("onNewIntent")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -158,22 +157,6 @@ class MainActivity : ThemedAppCompatActivity() {
         finish()
     }
 
-    private fun handleUpgrades() {
-        if (Config.fromVersionCode < 26) {
-            upgradeToggleModePreferences();
-        }
-        Config.fromVersionCode = BuildConfig.VERSION_CODE
-    }
-
-    private fun upgradeToggleModePreferences() {
-        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(appContext)
-        val currentToggleMode: String =
-                sharedPrefs.getString(getString(R.string.pref_key_time_toggle), "manual");
-        sharedPrefs.edit().remove(getString(R.string.pref_key_time_toggle)).apply()
-        Config.timeToggle = currentToggleMode != "manual"
-        Config.useLocation = currentToggleMode == "sun"
-    }
-
     @Subscribe
     fun onFilterIsOnChanged(event: filterIsOnChanged) {
         mSwitch.isChecked = Config.filterIsOn
@@ -183,9 +166,5 @@ class MainActivity : ThemedAppCompatActivity() {
     fun onOverlayPermissionDenied(event: overlayPermissionDenied) {
         mSwitch.isChecked = false
         requestOverlayPermission(this)
-    }
-
-    companion object {
-        const val EXTRA_FROM_SHORTCUT_BOOL = "com.jmstudios.redmoon.activity.MainActivity.EXTRA_FROM_SHORTCUT_BOOL"
     }
 }

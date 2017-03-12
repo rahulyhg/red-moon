@@ -37,6 +37,7 @@
 package com.jmstudios.redmoon.fragment
 
 import android.os.Bundle
+import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.SwitchPreference
 
@@ -49,14 +50,15 @@ import com.jmstudios.redmoon.preference.DimSeekBarPreference
 import com.jmstudios.redmoon.preference.IntensitySeekBarPreference
 import com.jmstudios.redmoon.preference.ProfileSelectorPreference
 import com.jmstudios.redmoon.util.hasWriteSettingsPermission
-import com.jmstudios.redmoon.util.Log
 import com.jmstudios.redmoon.util.requestWriteSettingsPermission
+import com.jmstudios.redmoon.util.Logger
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 class FilterFragment : EventPreferenceFragment() {
     //private var hasShownWarningToast = false
+    companion object : Logger()
 
     // Preferences
     private val profileSelectorPref: ProfileSelectorPreference
@@ -89,6 +91,10 @@ class FilterFragment : EventPreferenceFragment() {
         get() = (preferenceScreen.findPreference
                 (getString(R.string.pref_key_dark_theme)) as SwitchPreference)
 
+    private val buttonBacklightPref: ListPreference
+        get() = (preferenceScreen.findPreference
+                (getString(R.string.pref_key_button_backlight)) as ListPreference)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.filter_preferences)
@@ -96,6 +102,7 @@ class FilterFragment : EventPreferenceFragment() {
         if (!hasWriteSettingsPermission) { lowerBrightnessPref.isChecked = false }
         updateSecureSuspendSummary()
         updateTimeToggleSummary()
+        updateBacklightPrefSummary()
 
         lowerBrightnessPref.onPreferenceChangeListener =
                 Preference.OnPreferenceChangeListener { _, newValue ->
@@ -115,7 +122,7 @@ class FilterFragment : EventPreferenceFragment() {
     }
 
     override fun onResume() {
-        Log("onResume")
+        Log.i("onResume")
         super.onResume()
         EventBus.getDefault().register(profileSelectorPref)
         updateSecureSuspendSummary()
@@ -137,6 +144,14 @@ class FilterFragment : EventPreferenceFragment() {
                                      else R.string.text_switch_off)
     }
 
+    private fun updateBacklightPrefSummary() {
+        buttonBacklightPref.setSummary(when(Config.buttonBacklightFlag) {
+            "system" -> R.string.pref_button_backlight_entries_array_0
+            "dim"    -> R.string.pref_button_backlight_entries_array_1
+            else     -> R.string.pref_button_backlight_entries_array_2
+        })
+    }
+
     //region presenter
     @Subscribe
     fun onColorChanged(event: colorChanged) {
@@ -151,6 +166,11 @@ class FilterFragment : EventPreferenceFragment() {
     @Subscribe
     fun onDimLevelChanged(event: dimChanged) {
         dimPref.setProgress(Config.dim)
+    }
+
+    @Subscribe
+    fun onButtonBacklightChanged(event: buttonBacklightChanged) {
+        updateBacklightPrefSummary()
     }
     //endregion
 }
