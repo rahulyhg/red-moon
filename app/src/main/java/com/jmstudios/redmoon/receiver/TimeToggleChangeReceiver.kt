@@ -91,16 +91,20 @@ class TimeToggleChangeReceiver : BroadcastReceiver() {
 
                 val now = GregorianCalendar()
                 now.add(Calendar.SECOND, 1)
-                if (calendar.before(now)) { calendar.add(Calendar.DATE, 1) }
 
-                Log.i("Scheduling alarm for " + calendar.toString())
+                calendar.run {
+                    if (before(now)) { add(Calendar.DATE, 1) }
+                    Log.i("Scheduling alarm for $this")
 
-                val pendingIntent = PendingIntent.getBroadcast(appContext, 0, command, 0)
-
-                if (atLeastAPI(19)) {
-                    alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
-                } else {
-                    alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
+                    with (alarmManager) {
+                        val PI = PendingIntent.getBroadcast(appContext, 0, command, 0)
+                        val RTC = AlarmManager.RTC
+                        when {
+                            atLeastAPI(23) -> setExactAndAllowWhileIdle(RTC, timeInMillis, PI)
+                            atLeastAPI(19) -> setExact(RTC, timeInMillis, PI)
+                            else -> set(RTC, timeInMillis, PI)
+                        }
+                    }
                 }
             } else {
                 Log.i("Tried to schedule alarm, but timer is disabled.")
